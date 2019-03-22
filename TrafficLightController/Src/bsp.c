@@ -1,12 +1,35 @@
 #include "bsp.h"
+#include "timer.h"
 
-//Exported Global Variables
- int Button_Status = 0; 
+// exported global variables
+volatile int Button_Status = 0;
 
-/** @brief 		Initialize I/O for lamps
-		@retval 	None
+/** @brief  Initialize I/O for lamps
+    @retval None
 */
-void BSP_Init(void){}
-void Signal_Pass(void){}
-void Signal_Block(void){}
-void Signal_Flash(void){}
+void BSP_Init(void)
+{
+}
+
+/** @brief  Change lamps to GREEN
+    @retval None
+*/
+void Signal_Pass(void)
+{
+    RED_OFF();
+}
+
+/** @brief  Change lamps to RED
+    @retval None
+*/
+void Signal_Block(void)
+{
+    RED_ON();
+}
+
+/** @brief  Flash YELLOW lamp
+    @retval None
+*/
+void Signal_Flash(void)
+{
+}
