@@ -60,6 +60,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define MODE_SW_Pin GPIO_PIN_3
 #define MODE_SW_GPIO_Port GPIOE
+#define YELLOW_LAMP_Pin GPIO_PIN_2
+#define YELLOW_LAMP_GPIO_Port GPIOC
+#define GREEN_LAMP_Pin GPIO_PIN_4
+#define GREEN_LAMP_GPIO_Port GPIOC
 #define BUTTON1_Pin GPIO_PIN_2
 #define BUTTON1_GPIO_Port GPIOB
 #define BUTTON1_EXTI_IRQn EXTI2_IRQn

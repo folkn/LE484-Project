@@ -14,9 +14,10 @@ void BSP_Init(void)
 /** @brief  Change lamps to GREEN
     @retval None
 */
-void Signal_Pass(void)
+void Signal_Pass(void) //Car Pass
 {
     RED_OFF();
+		GREEN_ON();
 }
 
 /** @brief  Change lamps to RED
@@ -25,6 +26,7 @@ void Signal_Pass(void)
 void Signal_Block(void)
 {
     RED_ON();
+		GREEN_OFF();
 }
 
 /** @brief  Flash YELLOW lamp
