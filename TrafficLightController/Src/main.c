@@ -122,9 +122,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    Event_t evt = Event_Detect();   
-    uint32_t timeout_value = Ctrler_Exec(evt);
-    Timeout_Config(timeout_value);
+    Event_t evt = Event_Detect();   //detect event
+    uint32_t timeout_value = Ctrler_Exec(evt); //Execute state machine, return timeout
+    Timeout_Config(timeout_value); //set timeout value in timer
     Delay(1);
   }
   /* USER CODE END 3 */
