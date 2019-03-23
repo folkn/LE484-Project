@@ -1,8 +1,13 @@
 #include "timer.h"
+#include "bsp.h"
+#include "main.h"
 
 volatile uint32_t Tick = 0;
 uint32_t Timeout_Value = 0;
-int Timeout_Status = 0;
+int Timeout_Status = 0; //Timeout flag
+int greenTime = 0; //Time that traffic light is green
+int MIN_GREEN_TIME = 0;
+int WALK_INTERVAL = 0;
 
 /** @brief Set timeout value
 */
@@ -33,5 +38,11 @@ void HAL_IncTick(void)
         if (Tick == Timeout_Value) {
             Timeout_Status = 1;
         }
+				if (Light == GREEN){
+					greenTime++;
+				}
+				else if (Light == RED){
+					greenTime = 0;
+				}
     }
 }

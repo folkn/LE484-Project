@@ -1,17 +1,10 @@
+# Traffic Light Controller *(Completed)*
+A traffic light controller for pedestrian crossing that operates based on a finite state machine
 
-## *Work in Progress* Current Progress
-* Added State Machine Structure for Traffic Lights
-* Operation - *Default: GREEN.  Button: Green --> Red --> Green*
+See TrafficLight.xlsx for specifications and details.
 
-## TO-DO
-* Add WAIT
-* Set MIN_GREEN_PERIOD
-* Set Priority Events
-* Set DIPSWITCH Settings
 
-# Traffic Light Controller
-Traffic light controller for pedestrian crossing
-
+### Objectives
 * TLC-01	Controller shall operate two lamp poles for roadway traffic signal and two lamp poles for pedestrian signal
 * TLC-02	Controller shall display countdown signals for both roadway and pedestrian
 * TLC-03	Controller shall let cars pass if no higher priority event is detected

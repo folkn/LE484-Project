@@ -76,7 +76,7 @@ Event_t Event_Detect()
 			evt = BUTTON;
 			Button_Status = 0;
 		}
-		if(MODE_READ()==SET){
+		if(MODE_READ()){ //out of service switch
 			evt = MODE_CHANGE;
 		}
     return evt;
@@ -122,9 +122,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		
+		
     Event_t evt = Event_Detect();   //detect event
     uint32_t timeout_value = Ctrler_Exec(evt); //Execute state machine, return timeout
     Timeout_Config(timeout_value); //set timeout value in timer
+	  MIN_GREEN_TIME = GREEN_TIME_READ() ? 600: 1200; //60s 120s
+		WALK_INTERVAL = WALK_READ() ? 100: 200; //10s 20s
     Delay(1);
   }
   /* USER CODE END 3 */
@@ -181,6 +185,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
@@ -189,11 +194,14 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(RED_LAMP_GPIO_Port, RED_LAMP_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : MODE_SW_Pin */
-  GPIO_InitStruct.Pin = MODE_SW_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, WALK_Pin|DONT_WALK_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : MIN_GREEN_SW_Pin WALK_INTERVAL_SW_Pin MODE_SW_Pin */
+  GPIO_InitStruct.Pin = MIN_GREEN_SW_Pin|WALK_INTERVAL_SW_Pin|MODE_SW_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(MODE_SW_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : YELLOW_LAMP_Pin GREEN_LAMP_Pin */
   GPIO_InitStruct.Pin = YELLOW_LAMP_Pin|GREEN_LAMP_Pin;
@@ -215,9 +223,25 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(RED_LAMP_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PB15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : WALK_Pin DONT_WALK_Pin */
+  GPIO_InitStruct.Pin = WALK_Pin|DONT_WALK_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
