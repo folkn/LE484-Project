@@ -1,4 +1,4 @@
-# Traffic Light Controller *(Completed)*
+# Traffic Light Controller 
 A traffic light controller for pedestrian crossing that operates based on a finite state machine
 
 See TrafficLight.xlsx for specifications and details.
